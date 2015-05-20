@@ -1,16 +1,13 @@
 import sys
 from PyQt4 import QtGui
+from ndimage.gui.main_window import NDImageWindow
 
 
 def main():
     app = QtGui.QApplication(sys.argv)
-    w = QtGui.QWidget()
-    w.resize(250, 150)
-    w.move(300, 300)
-    w.setWindowTitle('NDImage')
-    w.show()
-
+    window = NDImageWindow()
+    window.show()
     sys.exit(app.exec_())
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
