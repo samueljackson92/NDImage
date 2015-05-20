@@ -20,7 +20,12 @@ config = {
     'author_email': 'samueljackson@outlook.com',
     'version': ndimage.__version__,
     'install_requires': requirements,
+    'entry_points': '''
+    	[gui_scripts]
+	ndimage-gui=main:main
+    ''',
     'packages': ['ndimage'],
+    'scripts':['ndimage/main.py'],
     'name': 'ndimage'
 }
 
