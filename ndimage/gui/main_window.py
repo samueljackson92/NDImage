@@ -1,5 +1,7 @@
 from PyQt4 import QtGui, QtCore
 from . import get_ui_file
+from mpl_canvas import StaticMplCanvas
+
 form_class = get_ui_file("main.ui")
 
 
@@ -14,6 +16,9 @@ class NDImageWindow(QtGui.QMainWindow, form_class):
         self.file_menu.addAction('&Quit', self.fileQuit,
                                  QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
         self.menuBar().addMenu(self.file_menu)
+
+        static_canvas = StaticMplCanvas(self, width=2, height=2, dpi=100)
+        self.mainHBoxLayout.addWidget(static_canvas)
 
     def fileQuit(self):
         self.close()
