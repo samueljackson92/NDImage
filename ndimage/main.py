@@ -1,6 +1,6 @@
 import sys
 from PyQt4 import QtGui
-from ndimage.gui.main_window import NDImageWindow
+from gui.main_window import NDImageWindow
 
 
 def main():
