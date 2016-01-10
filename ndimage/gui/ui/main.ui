@@ -18,15 +18,63 @@
     <item>
      <layout class="QHBoxLayout" name="mainHBoxLayout">
       <item>
-       <layout class="QVBoxLayout" name="rightVBoxLayout"/>
+       <layout class="QVBoxLayout" name="leftLayout">
+        <item>
+         <layout class="QVBoxLayout" name="topVBoxLayout"/>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="bottomVBoxLayout"/>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
    </layout>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
   <action name="actionQuit">
    <property name="text">
     <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionLoad_Dataset">
+   <property name="text">
+    <string>Load Dataset</string>
+   </property>
+  </action>
+  <action name="actionLoad_Projection">
+   <property name="text">
+    <string>Load Projection</string>
+   </property>
+  </action>
+  <action name="actionQuit_2">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionQuit_3">
+   <property name="text">
+    <string>Hello</string>
+   </property>
+  </action>
+  <action name="actionHello">
+   <property name="text">
+    <string>Hello</string>
    </property>
   </action>
  </widget>

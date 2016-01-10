@@ -1,7 +1,8 @@
-from PyQt4 import QtGui, QtCore
+
+from PyQt4 import QtGui
 from . import get_ui_file
 from mpl_canvas import StaticMplCanvas
-from table_view import TableView
+from controllers.menu_controller import MenuController
 form_class = get_ui_file("main.ui")
 
 
@@ -12,21 +13,19 @@ class NDImageWindow(QtGui.QMainWindow, form_class):
         self.init_ui()
 
     def init_ui(self):
-        # menu bar
-        self.file_menu = QtGui.QMenu('&File', self)
-        self.file_menu.addAction('&Quit', self.fileQuit,
-                                 QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
-        self.menuBar().addMenu(self.file_menu)
+
+        fileMenu = self.menuFile
+        self.fileController = MenuController(fileMenu, self)
 
         static_canvas = StaticMplCanvas(self, width=2, height=2, dpi=100)
+
         self.mainHBoxLayout.addWidget(static_canvas)
+        self.bottomVBoxLayout.addWidget(QtGui.QTableWidget(0, 0))
+        self.topVBoxLayout.addWidget(QtGui.QTableWidget(0, 0))
 
-        data = {'col1':['1','2','3'],
-                'col2':['4','5','6'],
-                'col3':['7','8','9']}
-
-        static_table_view = TableView(data, 5, 3)
-        self.rightVBoxLayout.addWidget(static_table_view)
+    def clear_layout(self, layout):
+        for i in reversed(range(layout.count())):
+            layout.itemAt(i).widget().deleteLater()
 
     def fileQuit(self):
         self.close()
