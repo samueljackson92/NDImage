@@ -20,7 +20,7 @@
       <item>
        <layout class="QVBoxLayout" name="leftLayout">
         <item>
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="datasetLabel">
           <property name="font">
            <font>
             <family>Helvetica</family>
@@ -38,7 +38,7 @@
          <layout class="QVBoxLayout" name="topVBoxLayout"/>
         </item>
         <item>
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="projectionLabel">
           <property name="font">
            <font>
             <family>Helvetica</family>
@@ -74,6 +74,8 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionLoad_Dataset"/>
+    <addaction name="actionLoad_Projection"/>
    </widget>
    <widget class="QMenu" name="menuProjection">
     <property name="title">
@@ -83,17 +85,13 @@
      <property name="title">
       <string>Create Projection</string>
      </property>
+     <addaction name="actionPCA"/>
     </widget>
     <addaction name="menuCreate_Projection"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuProjection"/>
   </widget>
-  <action name="actionQuit">
-   <property name="text">
-    <string>Quit</string>
-   </property>
-  </action>
   <action name="actionLoad_Dataset">
    <property name="text">
     <string>Load Dataset</string>
@@ -102,16 +100,6 @@
   <action name="actionLoad_Projection">
    <property name="text">
     <string>Load Projection</string>
-   </property>
-  </action>
-  <action name="actionQuit_2">
-   <property name="text">
-    <string>Quit</string>
-   </property>
-  </action>
-  <action name="actionQuit_3">
-   <property name="text">
-    <string>Hello</string>
    </property>
   </action>
   <action name="actionHello">
