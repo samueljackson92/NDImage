@@ -5,6 +5,7 @@ import os.path
 import pandas as pd
 from sklearn.decomposition import PCA
 from fileprocessing.data_loader import DataLoader
+from mpl_canvas_controller import MplCanvasLassoSelector
 
 
 class FileMenuListener(object):
@@ -14,6 +15,11 @@ class FileMenuListener(object):
         self._dataLoader = DataLoader()
         parent.actionLoad_Dataset.triggered.connect(self.action_load_dataset)
         parent.actionLoad_Projection.triggered.connect(self.action_load_projection)
+        parent.actionSelect_Points.triggered.connect(self.action_select_points)
+
+    def action_select_points(self, event):
+        fig_canvas = self._parent.figure.get_figure_canvas()
+        self.selector = MplCanvasLassoSelector(fig_canvas, self._parent)
 
     def action_load_dataset(self, event):
         dataset = self._load_data_file()
