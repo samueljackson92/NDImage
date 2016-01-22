@@ -3,13 +3,9 @@ from PyQt4 import QtGui
 from . import get_ui_file
 
 from gui.table_model import DataFrameTableModel
-from gui.mpl_canvas import PandasMplCanvas
+from gui.mpl_canvas import PandasMplWidget
 from controllers.menu_controller import FileMenuListener, CreateProjectionMenuListener
 from controllers.mpl_canvas_controller import MplCanvasListener
-
-from matplotlib.backends.backend_qt4agg import (
-    NavigationToolbar2QT as NavigationToolbar)
-
 
 form_class = get_ui_file("main.ui")
 
@@ -32,16 +28,10 @@ class NDImageWindow(QtGui.QMainWindow, form_class):
         self.datasetTableView.setModel(self.datasetTable)
         self.projectionTableView.setModel(self.projectionTable)
 
-        self.figure = PandasMplCanvas(width=2, height=2, dpi=100)
+        self.figure = PandasMplWidget()
         self.mplCanvasController = MplCanvasListener(self.figure.get_canvas(), self)
 
-        self.mpl_toolbar = NavigationToolbar(self.figure.get_canvas(), self)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
-        sizePolicy.setHeightForWidth(True)
-        self.mpl_toolbar.setSizePolicy(sizePolicy)
-
-        self.rightLayout.addWidget(self.figure)
-        self.rightLayout.addWidget(self.mpl_toolbar)
+        self.mainHBoxLayout.addWidget(self.figure)
         self.topVBoxLayout.addWidget(self.datasetTableView)
         self.bottomVBoxLayout.addWidget(self.projectionTableView)
 
