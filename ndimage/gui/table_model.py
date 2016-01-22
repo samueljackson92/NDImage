@@ -25,5 +25,6 @@ class DataFrameTableModel(QtCore.QAbstractTableModel):
         return self._data
 
     def set_data(self, data):
+        self.beginResetModel()
         self._data = data
-        self.reset()
+        self.endResetModel()
