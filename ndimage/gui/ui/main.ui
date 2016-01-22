@@ -81,13 +81,7 @@
     <property name="title">
      <string>Projection</string>
     </property>
-    <widget class="QMenu" name="menuCreate_Projection">
-     <property name="title">
-      <string>Create Projection</string>
-     </property>
-     <addaction name="actionPCA"/>
-    </widget>
-    <addaction name="menuCreate_Projection"/>
+    <addaction name="actionCreate_Projection"/>
     <addaction name="actionSelect_Points"/>
     <addaction name="actionDeselect_All"/>
     <addaction name="separator"/>
@@ -124,6 +118,11 @@
   <action name="actionSelection_Statistics">
    <property name="text">
     <string>Selection Statistics</string>
+   </property>
+  </action>
+  <action name="actionCreate_Projection">
+   <property name="text">
+    <string>Create Projection</string>
    </property>
   </action>
  </widget>
