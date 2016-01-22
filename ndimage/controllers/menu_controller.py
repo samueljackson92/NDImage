@@ -15,11 +15,6 @@ class FileMenuListener(object):
         self._dataLoader = DataLoader()
         parent.actionLoad_Dataset.triggered.connect(self.action_load_dataset)
         parent.actionLoad_Projection.triggered.connect(self.action_load_projection)
-        parent.actionSelect_Points.triggered.connect(self.action_select_points)
-
-    def action_select_points(self, event):
-        fig_canvas = self._parent.figure.get_figure_canvas()
-        self.selector = MplCanvasLassoSelector(fig_canvas, self._parent)
 
     def action_load_dataset(self, event):
         dataset = self._load_data_file()
@@ -38,6 +33,22 @@ class FileMenuListener(object):
         home_dir = os.path.expanduser("~")
         filename = QtGui.QFileDialog.getOpenFileName(self._parent, 'Open file', home_dir)
         return str(filename)
+
+
+class ProjectionMenuListener(object):
+
+    def __init__(self, parent):
+        self._parent = parent
+        self._parent.actionSelect_Points.triggered.connect(self.action_select_points)
+        self._parent.actionDeselect_All.triggered.connect(self.action_deselect_points)
+
+    def action_select_points(self, event):
+        fig_canvas = self._parent.figure.get_figure_canvas()
+        self.selector = MplCanvasLassoSelector(fig_canvas, self._parent)
+
+    def action_deselect_points(self, event):
+        self._parent.figure.get_figure_canvas().reset_color()
+        self._parent.deselect_all_rows()
 
 
 class CreateProjectionMenuListener(object):

@@ -58,6 +58,12 @@ class PandasMplCanvas(FigureCanvas):
         self.face_color = self.points.get_facecolors()
         self.face_color = np.tile(self.face_color, npts).reshape(npts, -1)
 
+    def reset_color(self):
+        self.face_color = self.points.get_facecolors()
+        self.face_color[:, -1] = 1
+        self.points.set_facecolors(self.face_color)
+        self.draw()
+
     def highlight_points(self, idx, alpha=0.3):
         self.face_color[:, -1] = alpha
         self.face_color[idx, -1] = 1
