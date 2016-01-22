@@ -8,12 +8,12 @@ from matplotlib.figure import Figure
 class PandasMplCanvas(FigureCanvas):
     """Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.)."""
     def __init__(self, parent=None, width=5, height=4, dpi=100):
-        fig = Figure(figsize=(width, height), dpi=dpi)
-
-        self.axes = fig.add_subplot(111)
+        self.figure = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = self.figure.add_subplot(111)
         # We want the axes cleared every time plot() is called
         self.axes.hold(False)
-        FigureCanvas.__init__(self, fig)
+
+        FigureCanvas.__init__(self, self.figure)
         self.setParent(parent)
 
         FigureCanvas.setSizePolicy(self,
@@ -24,5 +24,8 @@ class PandasMplCanvas(FigureCanvas):
     def plot_data_frame(self, dataFrame):
         x = dataFrame[[0]]
         y = dataFrame[[1]]
-        self.axes.scatter(x, y)
+        self.axes.scatter(x, y, picker=True)
         self.draw()
+
+    def get_canvas(self):
+        return self.figure.canvas

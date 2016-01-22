@@ -102,11 +102,6 @@
     <string>Load Projection</string>
    </property>
   </action>
-  <action name="actionHello">
-   <property name="text">
-    <string>Hello</string>
-   </property>
-  </action>
   <action name="actionPCA">
    <property name="text">
     <string>PCA</string>
