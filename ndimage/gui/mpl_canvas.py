@@ -22,6 +22,12 @@ class PandasMplWidget(QtGui.QWidget):
         vbox.addWidget(self.toolbar)
         self.setLayout(vbox)
 
+    def get_figure(self):
+        return self.figure.figure
+
+    def get_axes(self):
+        return self.figure.axes
+
     def get_canvas(self):
         return self.figure.figure.canvas
 
