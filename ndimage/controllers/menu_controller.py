@@ -6,6 +6,8 @@ import pandas as pd
 from sklearn.decomposition import PCA
 from fileprocessing.data_loader import DataLoader
 from mpl_canvas_controller import MplCanvasLassoSelector
+
+from algorithms.algorithm_factory import AlgorithmFactory
 from gui.dialogs import StatsDialog, AlgorithmDialog
 from gui.table_model import DataFrameTableModel
 
@@ -62,21 +64,9 @@ class ProjectionMenuListener(object):
 
     def action_create_projection(self, event):
         name, parameters, ok = AlgorithmDialog.getAlgorithmParameters(self._parent)
-        print name, parameters, ok
-
-
-class CreateProjectionMenuListener(object):
-
-    def __init__(self, parent):
-        self._parent = parent
-        parent.actionPCA.triggered.connect(self.action_run_pca)
-
-    def action_run_pca(self, event):
-        dataset = self._parent.get_dataset()
-        projection = self.run_pca(dataset)
-        self._parent.update_projection(projection)
-
-    def run_pca(self, X):
-        pca = PCA(n_components=2)
-        X_r = pca.fit(X).transform(X)
-        return pd.DataFrame(X_r)
+        if ok:
+            dataset = self._parent.get_dataset()
+            algorithm = AlgorithmFactory.create(name, parameters)
+            projection = algorithm.fit_transform(dataset)
+            projection = pd.DataFrame(projection)
+            self._parent.update_projection(projection)

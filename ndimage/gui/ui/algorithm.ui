@@ -31,7 +31,7 @@
        </item>
        <item>
         <property name="text">
-         <string>LLE</string>
+         <string>LocallyLinearEmbedding</string>
         </property>
        </item>
        <item>
@@ -46,7 +46,7 @@
        </item>
        <item>
         <property name="text">
-         <string>t-SNE</string>
+         <string>TSNE</string>
         </property>
        </item>
       </widget>
