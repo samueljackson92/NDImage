@@ -33,7 +33,7 @@ class NDImageWindow(QtGui.QMainWindow, form_class):
         self.projectionTableView.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
 
         self.figure = PandasMplWidget()
-        self.mplCanvasController = MplCanvasListener(self.figure.get_canvas(), self)
+        self.mplCanvasController = MplCanvasListener(self.figure.get_figure_canvas(), self)
 
         self.mainHBoxLayout.addWidget(self.figure)
         self.topVBoxLayout.addWidget(self.datasetTableView)

@@ -6,13 +6,13 @@ from matplotlib.path import Path
 
 class MplCanvasLassoSelector(object):
 
-    def __init__(self, canvas, parent):
+    def __init__(self, fig_canvas, parent):
         self._parent = parent
-        self._canvas = canvas
-        self._lasso = LassoSelector(self._parent.figure.get_axes(),
+        self._canvas = fig_canvas
+        self._lasso = LassoSelector(self._canvas.axes,
                                     onselect=self.onselect)
         # Figure MUST be redrawn at this point
-        self._parent.figure.figure.draw()
+        self._canvas.draw()
 
     def onselect(self, verts):
         df = self._parent.get_projection()
@@ -22,14 +22,13 @@ class MplCanvasLassoSelector(object):
             idx = np.nonzero([path.contains_point(xy) for xy in xys])[0]
             self._parent.select_rows(idx)
             self._lasso.disconnect_events()
-            self._parent.figure.figure.draw_idle()
+            self._canvas.draw_idle()
 
 
 class MplCanvasListener(object):
-    def __init__(self, canvas, parent):
+    def __init__(self, fig_canvas, parent):
         self._parent = parent
-        self._canvas = canvas
-        self._canvas.mpl_connect('button_press_event', self.select_rows)
+        fig_canvas.figure.canvas.mpl_connect('button_press_event', self.select_rows)
         self._parent.projectionTable.modelReset.connect(self.reset_tree)
         self.reset_tree()
 

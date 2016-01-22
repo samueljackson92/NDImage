@@ -18,7 +18,8 @@ class FileMenuListener(object):
         parent.actionSelect_Points.triggered.connect(self.action_select_points)
 
     def action_select_points(self, event):
-        self.selector = MplCanvasLassoSelector(self._parent.figure.get_canvas(), self._parent)
+        fig_canvas = self._parent.figure.get_figure_canvas()
+        self.selector = MplCanvasLassoSelector(fig_canvas, self._parent)
 
     def action_load_dataset(self, event):
         dataset = self._load_data_file()
