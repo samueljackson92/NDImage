@@ -2,6 +2,7 @@
 from PyQt4 import QtGui
 from . import get_ui_file
 
+import numpy as np
 from gui.table_model import DataFrameTableModel
 from gui.mpl_canvas import PandasMplWidget
 from controllers.menu_controller import (
@@ -60,9 +61,18 @@ class NDImageWindow(QtGui.QMainWindow, form_class):
             self.datasetTableView.selectRow(i)
             self.projectionTableView.selectRow(i)
 
+    def get_selected_rows(self):
+        return self.datasetTableView.selectedIndexes()
+
     def deselect_all_rows(self):
         self.datasetTableView.clearSelection()
         self.projectionTableView.clearSelection()
+
+    def get_selected_data(self):
+        idx = [item.row() for item in self.get_selected_rows()]
+        idx = np.unique(idx)
+        df = self.get_dataset()
+        return df.iloc[idx].describe()
 
     def update_projection(self, projection):
         self.projectionTable.set_data(projection)

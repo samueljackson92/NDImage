@@ -6,6 +6,8 @@ import pandas as pd
 from sklearn.decomposition import PCA
 from fileprocessing.data_loader import DataLoader
 from mpl_canvas_controller import MplCanvasLassoSelector
+from gui.stats_dialog import StatsDialog
+from gui.table_model import DataFrameTableModel
 
 
 class FileMenuListener(object):
@@ -41,6 +43,7 @@ class ProjectionMenuListener(object):
         self._parent = parent
         self._parent.actionSelect_Points.triggered.connect(self.action_select_points)
         self._parent.actionDeselect_All.triggered.connect(self.action_deselect_points)
+        self._parent.actionSelection_Statistics.triggered.connect(self.action_selection_statistics)
 
     def action_select_points(self, event):
         fig_canvas = self._parent.figure.get_figure_canvas()
@@ -49,6 +52,12 @@ class ProjectionMenuListener(object):
     def action_deselect_points(self, event):
         self._parent.figure.get_figure_canvas().reset_color()
         self._parent.deselect_all_rows()
+
+    def action_selection_statistics(self, event):
+        data = self._parent.get_selected_data()
+        model = DataFrameTableModel(data=data, parent=self._parent)
+        dialog = StatsDialog(model, self._parent)
+        dialog.show()
 
 
 class CreateProjectionMenuListener(object):

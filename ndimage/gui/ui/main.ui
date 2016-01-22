@@ -90,6 +90,8 @@
     <addaction name="menuCreate_Projection"/>
     <addaction name="actionSelect_Points"/>
     <addaction name="actionDeselect_All"/>
+    <addaction name="separator"/>
+    <addaction name="actionSelection_Statistics"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuProjection"/>
@@ -117,6 +119,11 @@
   <action name="actionDeselect_All">
    <property name="text">
     <string>Deselect All</string>
+   </property>
+  </action>
+  <action name="actionSelection_Statistics">
+   <property name="text">
+    <string>Selection Statistics</string>
    </property>
   </action>
  </widget>
