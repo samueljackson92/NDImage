@@ -25,8 +25,12 @@ class NDImageWindow(QtGui.QMainWindow, form_class):
 
         self.datasetTableView = QtGui.QTableView()
         self.projectionTableView = QtGui.QTableView()
+
         self.datasetTableView.setModel(self.datasetTable)
+        self.datasetTableView.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
+
         self.projectionTableView.setModel(self.projectionTable)
+        self.projectionTableView.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
 
         self.figure = PandasMplWidget()
         self.mplCanvasController = MplCanvasListener(self.figure.get_canvas(), self)
@@ -42,12 +46,21 @@ class NDImageWindow(QtGui.QMainWindow, form_class):
         return self.projectionTable.get_data()
 
     def select_rows(self, index):
-        self.datasetTableView.selectRow(index)
-        self.projectionTableView.selectRow(index)
+        self.projectionTableView.clearSelection()
+        self.datasetTableView.clearSelection()
+
+        # if the index is a single number convert it to an iterable
+        if isinstance(index, int):
+            index = [index]
+
+        # iterate and set all rows to selected
+        for i in index:
+            self.datasetTableView.selectRow(i)
+            self.projectionTableView.selectRow(i)
 
     def update_projection(self, projection):
         self.projectionTable.set_data(projection)
-        self.figure.plot_data_frame(projection)
+        self.figure.plot(projection)
 
     def update_dataset(self, dataset):
         self.datasetTable.set_data(dataset)

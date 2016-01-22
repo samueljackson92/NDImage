@@ -25,6 +25,9 @@ class PandasMplWidget(QtGui.QWidget):
     def get_canvas(self):
         return self.figure.figure.canvas
 
+    def plot(self, data):
+        self.figure.plot_data_frame(data)
+
 
 class PandasMplCanvas(FigureCanvas):
     """Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.)."""
