@@ -31,10 +31,27 @@ class AlgorithmDialog(QtGui.QDialog, algorithm_class):
     def get_algorithm_name(self):
         return str(self.algorithmName.currentText())
 
+    def parse_columns(self):
+        columns_text = str(self.columnsEditor.text())
+        if columns_text == "":
+            return None
+
+        parts = columns_text.split(',')
+
+        def convert_type(x):
+            try:
+                return int(x)
+            except ValueError:
+                return str(x)
+
+        idx = map(convert_type, parts)
+        return idx
+
     @staticmethod
     def getAlgorithmParameters(parent=None):
         dialog = AlgorithmDialog(parent)
         result = dialog.exec_()
         name = dialog.get_algorithm_name()
+        columns = dialog.parse_columns()
         parameters = {}
-        return (name, parameters, result == QtGui.QDialog.Accepted)
+        return (name, parameters, columns, result == QtGui.QDialog.Accepted)

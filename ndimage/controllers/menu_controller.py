@@ -3,7 +3,6 @@ from PyQt4 import QtGui
 import os.path
 
 import pandas as pd
-from sklearn.decomposition import PCA
 from fileprocessing.data_loader import DataLoader
 from mpl_canvas_controller import MplCanvasLassoSelector
 
@@ -63,10 +62,24 @@ class ProjectionMenuListener(object):
         dialog.show()
 
     def action_create_projection(self, event):
-        name, parameters, ok = AlgorithmDialog.getAlgorithmParameters(self._parent)
+        name, parameters, columns, ok = AlgorithmDialog.getAlgorithmParameters(self._parent)
         if ok:
-            dataset = self._parent.get_dataset()
-            algorithm = AlgorithmFactory.create(name, parameters)
-            projection = algorithm.fit_transform(dataset)
-            projection = pd.DataFrame(projection)
-            self._parent.update_projection(projection)
+            try:
+                self._run_algorithm(name, columns, parameters)
+            except KeyError:
+                QtGui.QMessageBox.critical(self._parent,
+                    "Critical",
+                    "Not all columns exist in data file\n " + str(columns))
+
+    def _run_algorithm(self, name, columns, parameters):
+        dataset = self._parent.get_dataset()
+
+        if columns is not None:
+            subset = dataset[columns]
+        else:
+            subset = dataset
+
+        algorithm = AlgorithmFactory.create(name, parameters)
+        projection = algorithm.fit_transform(subset)
+        projection = pd.DataFrame(projection)
+        self._parent.update_projection(projection)
