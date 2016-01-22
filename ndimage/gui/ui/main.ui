@@ -89,6 +89,7 @@
     </widget>
     <addaction name="menuCreate_Projection"/>
     <addaction name="actionSelect_Points"/>
+    <addaction name="actionDeselect_All"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuProjection"/>
@@ -110,7 +111,12 @@
   </action>
   <action name="actionSelect_Points">
    <property name="text">
-    <string>Select Points...</string>
+    <string>Select Points</string>
+   </property>
+  </action>
+  <action name="actionDeselect_All">
+   <property name="text">
+    <string>Deselect All</string>
    </property>
   </action>
  </widget>

@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from PyQt4 import QtGui
+import numpy as np
 
 from matplotlib.backends.backend_qt4agg import (
     FigureCanvasQTAgg as FigureCanvas,
@@ -48,5 +49,16 @@ class PandasMplCanvas(FigureCanvas):
     def plot_data_frame(self, dataFrame):
         x = dataFrame[[0]]
         y = dataFrame[[1]]
-        self.axes.scatter(x, y, picker=True)
+        self.points = self.axes.scatter(x, y, picker=True)
+        self.reset_face_color()
         self.draw()
+
+    def reset_face_color(self):
+        npts = len(self.points.get_offsets())
+        self.face_color = self.points.get_facecolors()
+        self.face_color = np.tile(self.face_color, npts).reshape(npts, -1)
+
+    def highlight_points(self, idx, alpha=0.3):
+        self.face_color[:, -1] = alpha
+        self.face_color[idx, -1] = 1
+        self.points.set_facecolors(self.face_color)
