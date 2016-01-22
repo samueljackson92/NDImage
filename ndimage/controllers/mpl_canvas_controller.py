@@ -21,6 +21,7 @@ class MplCanvasLassoSelector(object):
             path = Path(verts)
             idx = np.nonzero([path.contains_point(xy) for xy in xys])[0]
             self._parent.select_rows(idx)
+            self._canvas.highlight_points(idx)
             self._lasso.disconnect_events()
             self._canvas.draw_idle()
 
@@ -28,7 +29,8 @@ class MplCanvasLassoSelector(object):
 class MplCanvasListener(object):
     def __init__(self, fig_canvas, parent):
         self._parent = parent
-        fig_canvas.figure.canvas.mpl_connect('button_press_event', self.select_rows)
+        self._canvas = fig_canvas
+        self._canvas.figure.canvas.mpl_connect('button_press_event', self.select_rows)
         self._parent.projectionTable.modelReset.connect(self.reset_tree)
         self.reset_tree()
 
@@ -46,3 +48,5 @@ class MplCanvasListener(object):
         if df is not None:
             idx = self.find_nearest(event.xdata, event.ydata)
             self._parent.select_rows(idx)
+            self._canvas.highlight_points(idx)
+            self._canvas.draw_idle()
