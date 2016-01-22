@@ -29,7 +29,7 @@ class NDImageWindow(QtGui.QMainWindow, form_class):
         self.projectionTableView.setModel(self.projectionTable)
 
         self.figure = PandasMplCanvas(width=2, height=2, dpi=100)
-        self.mplCanvasController = MplCanvasListener(self.figure.figure.canvas, self)
+        self.mplCanvasController = MplCanvasListener(self.figure.get_canvas(), self)
 
         self.mainHBoxLayout.addWidget(self.figure)
         self.topVBoxLayout.addWidget(self.datasetTableView)
@@ -40,6 +40,10 @@ class NDImageWindow(QtGui.QMainWindow, form_class):
 
     def get_projection(self):
         return self.projectionTable.get_data()
+
+    def select_rows(self, index):
+        self.datasetTableView.selectRow(index)
+        self.projectionTableView.selectRow(index)
 
     def update_projection(self, projection):
         self.projectionTable.set_data(projection)

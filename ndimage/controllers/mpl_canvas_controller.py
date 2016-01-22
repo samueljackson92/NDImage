@@ -21,5 +21,4 @@ class MplCanvasListener(object):
         df = self._parent.get_projection()
         if df is not None:
             idx = self.find_nearest(event.xdata, event.ydata)
-            self._parent.datasetTableView.selectRow(idx)
-            self._parent.projectionTableView.selectRow(idx)
+            self._parent.select_rows(idx)

@@ -9,10 +9,10 @@ class PandasMplCanvas(FigureCanvas):
     """Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.)."""
     def __init__(self, parent=None, width=5, height=4, dpi=100):
         self.figure = Figure(figsize=(width, height), dpi=dpi)
-
         self.axes = self.figure.add_subplot(111)
         # We want the axes cleared every time plot() is called
         self.axes.hold(False)
+
         FigureCanvas.__init__(self, self.figure)
         self.setParent(parent)
 
@@ -26,3 +26,6 @@ class PandasMplCanvas(FigureCanvas):
         y = dataFrame[[1]]
         self.axes.scatter(x, y, picker=True)
         self.draw()
+
+    def get_canvas(self):
+        return self.figure.canvas
