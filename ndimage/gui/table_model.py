@@ -28,3 +28,10 @@ class DataFrameTableModel(QtCore.QAbstractTableModel):
         self.beginResetModel()
         self._data = data
         self.endResetModel()
+
+    def headerData(self, section, orientation, role=QtCore.Qt.DisplayRole):
+        if role == QtCore.Qt.DisplayRole and orientation == QtCore.Qt.Horizontal:
+            return str(self._data.columns[section])
+        if role == QtCore.Qt.DisplayRole and orientation == QtCore.Qt.Vertical:
+            return str(self._data.index[section])
+        return QtCore.QAbstractTableModel.headerData(self, section, orientation, role)
