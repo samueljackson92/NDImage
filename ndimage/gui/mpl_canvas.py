@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from PyQt4 import QtGui
 import numpy as np
 
+import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt4agg import (
     FigureCanvasQTAgg as FigureCanvas,
     NavigationToolbar2QT as NavigationToolbar)
@@ -53,6 +54,19 @@ class PandasMplCanvas(FigureCanvas):
         self.reset_face_color()
         self.draw()
 
+    def set_class_label(self, labels):
+        categories = np.unique(labels)
+        colors = np.linspace(0, 1, len(categories))
+        colordict = dict(zip(categories, colors))
+        colour_weights = labels.apply(lambda x: colordict[x])
+        color_map = plt.get_cmap("Spectral")
+        class_colors = color_map(colour_weights)
+        # copy existing alpha values
+        class_colors[:, -1] = self.face_color[:, -1]
+        self.face_color = class_colors
+        self.points.set_facecolors(self.face_color)
+        self.draw()
+
     def reset_face_color(self):
         npts = len(self.points.get_offsets())
         self.face_color = self.points.get_facecolors()
@@ -64,7 +78,7 @@ class PandasMplCanvas(FigureCanvas):
         self.points.set_facecolors(self.face_color)
         self.draw()
 
-    def highlight_points(self, idx, alpha=0.3):
+    def highlight_points(self, idx, alpha=0.2):
         self.face_color[:, -1] = alpha
         self.face_color[idx, -1] = 1
         self.points.set_facecolors(self.face_color)
