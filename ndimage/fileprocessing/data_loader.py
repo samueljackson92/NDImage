@@ -7,5 +7,5 @@ class DataLoader(object):
         pass
 
     def load_csv(self, file_path):
-        data_frame = pd.DataFrame.from_csv(file_path)
+        data_frame = pd.DataFrame.from_csv(file_path, index_col=False)
         return data_frame
