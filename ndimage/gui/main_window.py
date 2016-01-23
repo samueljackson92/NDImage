@@ -3,6 +3,8 @@ from PyQt4 import QtGui
 from . import get_ui_file
 
 import numpy as np
+
+from gui.table_view import PandasTableView
 from gui.table_model import DataFrameTableModel
 from gui.mpl_canvas import PandasMplWidget
 from controllers.menu_controller import (
@@ -25,8 +27,8 @@ class NDImageWindow(QtGui.QMainWindow, form_class):
         self.datasetTable = DataFrameTableModel()
         self.projectionTable = DataFrameTableModel()
 
-        self.datasetTableView = QtGui.QTableView()
-        self.projectionTableView = QtGui.QTableView()
+        self.datasetTableView = PandasTableView(self)
+        self.projectionTableView = PandasTableView(self)
 
         self.datasetTableView.setModel(self.datasetTable)
         self.datasetTableView.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
