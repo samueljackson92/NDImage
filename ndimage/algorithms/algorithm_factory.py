@@ -7,7 +7,7 @@ class AlgorithmFactory(object):
 
     @staticmethod
     def create(name, parameters={'n_components': 2}):
-        class_ = AlgorithmFactory.get_algorithm_class()
+        class_ = AlgorithmFactory.get_algorithm_class(name)
         return class_(**parameters)
 
     @staticmethod

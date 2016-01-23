@@ -65,11 +65,31 @@ class AlgorithmDialog(QtGui.QDialog, algorithm_class):
         idx = map(convert_type, parts)
         return idx
 
+    def get_parameters(self):
+        names = [str(self.parameterTable.item(row, 0).text())
+                 for row in xrange(self.parameterTable.rowCount())]
+
+        values = [str(self.parameterTable.item(row, 1).text())
+                  for row in xrange(self.parameterTable.rowCount())]
+
+        values = map(self.convert_parameter_type, values)
+        return dict(zip(names, values))
+
+    def convert_parameter_type(self, value):
+        if value == 'None':
+            return None
+
+        for type_ in [int, float, str]:
+            try:
+                return type_(value)
+            except ValueError:
+                continue
+
     @staticmethod
     def getAlgorithmParameters(parent=None):
         dialog = AlgorithmDialog(parent)
         result = dialog.exec_()
         name = dialog.get_algorithm_name()
         columns = dialog.parse_columns()
-        parameters = {}
+        parameters = dialog.get_parameters()
         return (name, parameters, columns, result == QtGui.QDialog.Accepted)
