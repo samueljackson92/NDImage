@@ -6,7 +6,7 @@ import numpy as np
 from gui.table_model import DataFrameTableModel
 from gui.mpl_canvas import PandasMplWidget
 from controllers.menu_controller import (
-    FileMenuListener, ProjectionMenuListener, CreateProjectionMenuListener)
+    FileMenuListener, ProjectionMenuListener)
 from controllers.mpl_canvas_controller import MplCanvasListener
 
 form_class = get_ui_file("main.ui")
@@ -21,7 +21,6 @@ class NDImageWindow(QtGui.QMainWindow, form_class):
     def init_ui(self):
         self.fileController = FileMenuListener(self)
         self.projectionController = ProjectionMenuListener(self)
-        self.createProjectionMenuController = CreateProjectionMenuListener(self)
 
         self.datasetTable = DataFrameTableModel()
         self.projectionTable = DataFrameTableModel()
